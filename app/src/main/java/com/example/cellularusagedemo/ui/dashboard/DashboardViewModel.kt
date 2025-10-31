@@ -1,7 +1,6 @@
 package com.example.cellularusagedemo.ui.dashboard
 
 import android.content.Context
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cellularusagedemo.R
@@ -9,10 +8,10 @@ import com.example.cellularusagedemo.common.DashboardUiState
 import com.example.cellularusagedemo.data.model.Plan
 import com.example.cellularusagedemo.data.repository.UsageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -29,6 +28,8 @@ class DashboardViewModel @Inject constructor(
     private val _toastEvent = MutableSharedFlow<String>()
     val toastEvent = _toastEvent.asSharedFlow()
 
+    private var dynamicUsageUpdateJob: Job? = null
+
 
     init {
         load()
@@ -36,7 +37,7 @@ class DashboardViewModel @Inject constructor(
 
     private fun load() {
         viewModelScope.launch {
-            delay(2000)
+            delay(1000)
             try {
                 val usage = repository.getUsage()
                 val promos = repository.getPromotions()
@@ -46,6 +47,35 @@ class DashboardViewModel @Inject constructor(
                 _uiState.value = DashboardUiState.Error(e.localizedMessage ?: "Unknown Error")
             }
         }
+    }
+
+    fun startDynamicUsageUpdates() {
+        dynamicUsageUpdateJob = viewModelScope.launch {
+            while (true) {
+                delay(3000)
+                val currentState = _uiState.value
+
+                if (currentState is DashboardUiState.Success) {
+                    val currentUsage = currentState.usage
+
+                    val newUsage = currentUsage.copy(
+                        dataUsedGb = (currentUsage.dataUsedGb + 0.3f)
+                            .coerceAtMost(currentUsage.dataLimitGb),
+                        minutesUsed = (currentUsage.minutesUsed + 10)
+                            .coerceAtMost(currentUsage.minutesLimit),
+                        smsUsed = (currentUsage.smsUsed + 5)
+                            .coerceAtMost(currentUsage.smsLimit)
+                    )
+                    if (currentUsage.smsUsed >= currentUsage.smsLimit) break
+                    _uiState.value = currentState.copy(usage = newUsage)
+                } else break
+            }
+        }
+    }
+
+    fun stopDynamicUsageUpdates() {
+        dynamicUsageUpdateJob?.cancel()
+        dynamicUsageUpdateJob = null
     }
 
     fun knowMoreAboutThePlan(context: Context, plan: Plan) {

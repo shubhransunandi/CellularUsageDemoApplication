@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.cellularusagedemo.R
 import com.example.cellularusagedemo.data.model.Usage
+import java.text.DecimalFormat
 
 @Composable
 fun UsageSummaryCard(usage: Usage?) {
@@ -46,9 +47,10 @@ fun UsageSummaryCard(usage: Usage?) {
             if (usage == null) {
                 Text("Loading...")
             } else {
+                val newDataUsage = DecimalFormat("#.##")
                 UsageRow(
                     stringResource(id = R.string.data_used),
-                    "${usage.dataUsedGb} GB of ${usage.dataLimitGb} GB",
+                    "${newDataUsage.format(usage.dataUsedGb)} GB of ${usage.dataLimitGb} GB",
                     (usage.dataUsedGb / usage.dataLimitGb).toFloat()
                 )
                 UsageRow(
