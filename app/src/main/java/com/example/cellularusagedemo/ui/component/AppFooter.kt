@@ -1,5 +1,6 @@
 package com.example.cellularusagedemo.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,7 +28,8 @@ fun AppFooter() {
     ) {
         Text(
             text = footerText,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
     }
 }

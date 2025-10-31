@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CellularUsageDemoApp</string>
+    <string name="app_name">CellularUsageApp</string>
     <string name="title">Cellular Usage App</string>
     <string name="dark_mode">Dark mode\u0020</string>
     <string name="light_mode">Light mode\u0020</string>

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +23,15 @@ import com.example.cellularusagedemo.data.model.Usage
 fun UsageSummaryCard(usage: Usage?) {
 
     val context = LocalContext.current
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+    ) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -30,7 +39,8 @@ fun UsageSummaryCard(usage: Usage?) {
             Text(
                 stringResource(id = R.string.usage_summary),
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(Modifier.height(4.dp))
             if (usage == null) {
@@ -53,8 +63,16 @@ fun UsageSummaryCard(usage: Usage?) {
                 )
 
                 Spacer(Modifier.height(4.dp))
-                Text(context.getString(R.string.balance, usage.balance.toString()))
-                Text(context.getString(R.string.renewal_date, usage.renewalDate))
+                Text(
+                    context.getString(R.string.balance, usage.balance.toString()),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+                Text(
+                    context.getString(R.string.renewal_date, usage.renewalDate),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary
+                )
             }
         }
     }
