@@ -33,7 +33,7 @@ Now includes manual Dark Mode toggle for switching between light and dark themes
 - Mock data is used (no backend integration).
 - Static promotions and plans are shown.
 - Added a Footer with copyright.
-- When pressing the "Know more" and "Subscribe" button, it shows only the Toast message for respective promotions and Available Plans.
+- When pressing the "Know more" and "Subscribe" button, it shows only the Toast message for respective Promotions and Available Plans.
 
 
 ---
