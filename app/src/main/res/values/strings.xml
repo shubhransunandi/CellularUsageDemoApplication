@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CellularUsageDemoApp</string>
+    <string name="title">Cellular Usage App</string>
+    <string name="dark_mode">Dark mode\u0020</string>
+    <string name="light_mode">Light mode\u0020</string>
+    <string name="know_more_about">Know more about %1$s</string>
+    <string name="know_more">Know more</string>
+    <string name="subscribe_to">Subscribed to %1$s</string>
+
+    <string name="usage_summary">\uD83E\uDDFE  Usage Summary</string>
+    <string name="data_used">Data Used:\u0020</string>
+    <string name="text_minutes">Minutes:\u0020</string>
+    <string name="text_sms">SMS:\u0020</string>
+    <string name="balance">Remaining Balance: ₹%1$s</string>
+    <string name="renewal_date">Renewal Date: %1$s</string>
+    <string name="promotions">\uD83D\uDCE2 Promotions</string>
+    <string name="available_plans">\uD83D\uDCE6 Available Plans</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="footer_text">\u00A9 %1$d %2$s</string>
+</resources>
