@@ -39,7 +39,7 @@ fun UsageRow(title: String, subtitle: String, progress: Float) {
                     .height(10.dp),
                 color = ProgressIndicatorDefaults.linearColor,
                 trackColor = ProgressIndicatorDefaults.linearTrackColor,
-                strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
+                strokeCap = ProgressIndicatorDefaults.LinearStrokeCap
             )
         }
     }

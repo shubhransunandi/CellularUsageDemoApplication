@@ -1,5 +1,6 @@
 package com.example.cellularusagedemo.ui.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,9 +27,10 @@ fun PlanRow(plan: Plan, onSubscribe: () -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            containerColor = MaterialTheme.colorScheme.onPrimary,
             contentColor = MaterialTheme.colorScheme.onSurface
         ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Row(
