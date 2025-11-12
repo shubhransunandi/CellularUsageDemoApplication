@@ -65,4 +65,7 @@ dependencies {
     kapt(libs.dagger.hilt.complier)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.lifecycle.viewmodel.ktx)
+
+    //DataStore
+    implementation(libs.androidx.datastore.preferences)
 }

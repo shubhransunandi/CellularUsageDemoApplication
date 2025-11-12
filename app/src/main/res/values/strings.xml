@@ -17,4 +17,7 @@
     <string name="available_plans">\uD83D\uDCE6 Available Plans</string>
     <string name="subscribe">Subscribe</string>
     <string name="footer_text">\u00A9 %1$d %2$s</string>
+
+    <string name="text_settings">Settings</string>
+    <string name="text_dark_theme">Dark Theme</string>
 </resources>

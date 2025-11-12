@@ -8,21 +8,24 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.cellularusagedemo.ui.component.AppFooter
 import com.example.cellularusagedemo.ui.component.AppTopBar
-import com.example.cellularusagedemo.ui.dashboard.DashboardScreen
 import com.example.cellularusagedemo.ui.theme.CellularUsageDemoAppTheme
+import com.example.cellularusagedemo.ui.theme.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 val LocalInnerPadding = staticCompositionLocalOf { PaddingValues(0.dp) }
+val LocalNavHostController = compositionLocalOf<NavHostController> { error("Error") }
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -30,24 +33,27 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var isDarkTheme by remember { mutableStateOf(false) }
-            CellularUsageDemoAppTheme(darkTheme = isDarkTheme) {
-                Scaffold(
-                    topBar = {
-                        AppTopBar(
-                            isDarkTheme = isDarkTheme,
-                            onThemeToggle = { isDarkTheme = it }
-                        )
-                    },
-                    bottomBar = { AppFooter() },
-                    content = { innerPadding ->
-                        CompositionLocalProvider(
-                            LocalInnerPadding provides innerPadding
-                        ) {
-                            DashboardScreen()
+            val navController = rememberNavController()
+            CompositionLocalProvider(
+                LocalNavHostController provides navController
+            ) {
+                val viewModel: ThemeViewModel = hiltViewModel()
+                val isDarkTheme by viewModel.isDarkTheme.collectAsState()
+                CellularUsageDemoAppTheme(darkTheme = isDarkTheme) {
+                    Scaffold(
+                        topBar = {
+                            AppTopBar()
+                        },
+                        bottomBar = { AppFooter() },
+                        content = { innerPadding ->
+                            CompositionLocalProvider(
+                                LocalInnerPadding provides innerPadding
+                            ) {
+                                CellularUsageAppNavigation()
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }
@@ -57,6 +63,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainPreview() {
     CellularUsageDemoAppTheme {
-        DashboardScreen()
+        CellularUsageAppNavigation()
     }
 }
